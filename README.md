@@ -6,4 +6,5 @@ These include:
 - abcde
 - i3
 - Polybar
+- Rofi
 - More to come soon...
