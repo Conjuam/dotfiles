@@ -1,46 +1,102 @@
 ;====My Polybar Settings===================================
 
-
-
+; Icon font from here: https://github.com/adi1090x/polybar-themes/
+; Icon Cheatsheet here: https://www.nerdfonts.com/cheat-sheet
 
 ;====General Settings======================================
 [colors]
-bg = #222D32
-fg = #CFD8DC
-adapta-cyan = #00BCD4
-adapta-red = #FF5252
-adapta-yellow = #C9BC0E
-adapta-lightgreen = #4DB6AC
-adapta-green = #009688
-adapta-grey = #475359
+bg = #1f1f1f
+fg = #ffffff
+fg-alt = #a9abb0
+
+acolor = #00897b
+curgent = #e53935
+coccupied = #1e88e5
+
+; Material Colours
+red = #e53935
+pink = #d81b60
+purple = #8e24aa
+deep-purple = #5e35b1
+indigo = #3949ab
+blue = #1e88e5
+light-blue = #039be5
+cyan = #00acc1
+teal = #00897b
+green = #43a047
+light-green = #7cb342
+lime = #c0ca33
+yellow = #fdd835
+amber = #ffb300
+orange = #fb8c00
+deep-orange = #f4511e
+brown = #6d4c41
+grey = #757575
+blue-gray = #546e7a
 
 [margin]
 for-modules = 1
 
 [bar/mainbar]
 width = 100%
-height = 22
+height = 17
 fixed-center = true
 line-size = 2
 background = ${colors.bg}
 foreground = ${colors.fg}
-font-0 = "Noto Sans:style=Regular:pixelsize=10;3"
-font-1 = "Hack:style=Regular:pixelsize=14;3"
-font-2 = "Noto Color Emoji:style=Regular:scale=11;3"
+font-0 = "Iosevka:style=Regular:pixelsize=11;2"
+font-1 = "Hack:style=Regular:size=11;2"
+font-2 = "Material Icons:size=11;4"
+font-3 = "Noto Color Emoji:style=Regular:scale=11;3"
+font-4 = "Weather Icons:style=Regular:size=11;1"
 cursor-click = pointer
-tray-position = right
-tray-padding = 1
+;tray-position = right
+;tray-padding = 1
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
 ;==========================================================
 
 
 
 ;====Module settings+======================================
-modules-left = i3 xwindow
-modules-center = date
-modules-right = weather volume cpu-graph memory
+modules-left = i3 rarrow2 xwindow rarrow1
+modules-center = larrow1 date rarrow1
+modules-right = larrow1 filesystem larrow2 network larrow1 volume larrow2 powermenu
 ;==========================================================
 
 
+;====Arrows================================================
+[module/rarrow1]
+; blue to bg
+type = custom/text
+content = 
+content-font = 1
+content-foreground = ${colors.blue}
+content-background = ${colors.bg}
+
+[module/rarrow2]
+; bg to blue
+type = custom/text
+content = 
+content-font = 1
+content-foreground = ${colors.bg}
+content-background = ${colors.blue}
+
+[module/larrow1]
+; blue to bg
+type = custom/text
+content = 
+content-font = 1
+content-foreground = ${colors.blue}
+content-background = ${colors.bg}
+
+[module/larrow2]
+; bg to blue
+type = custom/text
+content = 
+content-font = 1
+content-foreground = ${colors.bg}
+content-background = ${colors.blue}
 
 ;====Left modules==========================================
 [module/i3]
@@ -52,38 +108,39 @@ wrapping-scroll = false
 ; Only show workspaces on the same output as the bar
 ;pin-workspaces = true
 
-label-mode-padding = 2
+label-mode-padding = 1
 label-mode-foreground = ${colors.fg}
 label-mode-background = ${colors.bg}
 
 ; focused = Active workspace on focused monitor
 label-focused = %index%
 label-focused-background = ${colors.bg}
-label-focused-underline= ${colors.adapta-cyan}
-label-focused-padding = 2
+label-focused-padding = 1
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %index%
-label-unfocused-padding = 2
+label-unfocused-padding = 1
 
 ; visible = Active workspace on unfocused monitor
 label-visible = %index%
 label-visible-background = ${self.label-focused-background}
-label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
 label-urgent = %index%
-label-urgent-background = ${colors.adapta-red}
-label-urgent-padding = 2
+label-urgent-background = ${colors.red}
+label-urgent-padding = 1
 
 ; Separator in between workspaces
-label-separator = |
-label-separator-foreground = ${colors.fg}
+; label-separator = 
+; label-separator-foreground = ${colors.bg}
 
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:30:...%
+label = " %title:0:50:...% "
+label-background = ${colors.blue}
+
+
 ;==========================================================
 
 
@@ -92,98 +149,119 @@ label = %title:0:30:...%
 [module/date]
 type = internal/date
 interval = 1
-label =  %time%
+label = %time%
 label-padding = 1
-;label-background = ${colors.shade1}
-label-underline = ${colors.adapta-cyan}
-time = %a %d %b %Y %T
-label-margin = ${margin.for-modules}
+time =  %a %d %b %Y |  %T
+;label-margin = ${margin.for-modules}
+label-background = ${colors.blue}
 ;==========================================================
 
 
 
 ;====Right modules=========================================
+[module/filesystem]
+type = internal/fs
+mount-0 = /
+interval = 10
+fixed-values = true
+spacing = 1
+format-mounted = <label-mounted>
+format-unmounted = <label-unmounted>
+label-mounted =" %mountpoint%: %free% Free "
+label-unmounted = " %mountpoint%: Unmounted "
+format-mounted-background = ${colors.blue}
+format-unmounted-background = ${colors.blue}
+
 [module/updates-apt]
 type = custom/script
 exec = ~/.config/polybar/scripts/updates-apt.sh
 interval = 600
 
-[module/weather]
-type = custom/script
-interval = 10
-exec = curl -s wttr.in/Lowestoft?format=3
-format-underline = ${colors.adapta-cyan}
-
-[module/xbacklight]
+[module/backlight]
 type = internal/xbacklight
-format = <label> <bar>
-format-underline = ${colors.adapta-cyan}
+
+card = intel_backlight
+
+format = <ramp> <label>
+format-background = ${colors.bg}
+format-foreground = ${colors.fg}
 format-padding = 1
-label = 
-bar-width = 8
-bar-indicator = 
-bar-indicator-foreground = ${colors.adapta-lightgreen}
-bar-indicator-font = 2
-bar-fill = ─
-bar-fill-font = 2
-bar-fill-foreground = ${colors.adapta-lightgreen}
-bar-empty = ─
-bar-empty-font = 2
-bar-empty-foreground = ${colors.adapta-grey}
-;format-margin = ${margin.for-modules}
+
+label = %percentage%%
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-4 = 
 
 [module/volume]
 type = internal/alsa
-format-volume = <label-volume> <bar-volume>
-format-volume-underline = ${colors.adapta-cyan}
+;speaker-mixer = Speaker
+;headphone-mixer = Headphone
+;headphone-id = 16
+;mapped = true
+format-volume = <ramp-volume> <label-volume>
+label-volume = %percentage:3%%
+format-muted-prefix = "  "
+label-muted = "MUTE "
+
 format-volume-padding = 1
-label-volume = VOL: 
-label-muted = MUTE
-label-muted-underline = ${colors.adapta-cyan}
-label-muted-padding = 1
-bar-volume-width = 8
-bar-volume-foreground-0 = ${colors.adapta-lightgreen}
-bar-volume-foreground-1 = ${colors.adapta-lightgreen}
-bar-volume-foreground-2 = ${colors.adapta-lightgreen}
-bar-volume-foreground-3 = ${colors.adapta-lightgreen}
-bar-volume-foreground-4 = ${colors.adapta-lightgreen}
-bar-volume-foreground-5 = ${colors.adapta-yellow}
-bar-volume-foreground-6 = ${colors.adapta-yellow}
-bar-volume-foreground-7 = ${colors.adapta-red}
-bar-volume-gradient = false
-bar-volume-indicator = 
-bar-volume-indicator-foreground = ${colors.adapta-lightgreen}
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.adapta-grey}
-format-muted-margin = ${margin.for-modules}
-format-volume-margin = ${margin.for-modules}
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
+ramp-volume-4 = 
+ramp-volume-5 = 
+ramp-volume-6 = 
+
+format-volume-background = ${colors.blue}
 
 [module/wlan]
 type = internal/network
-interface = wlp2s0
+interface = wlan0
 interval = 0.1
 format-connected = <label-connected>
-;format-connected-background = ${colors.shade2}
-format-connected-underline = ${colors.adapta-cyan}
 format-connected-padding = 1
-label-connected =  %upspeed:9%  %downspeed:9%
+label-connected =  %upspeed%  %downspeed%
 ;label-connected =  %upspeed:9%  %downspeed:9%
 format-disconnected = <label-disconnected>
 format-disconnected-padding = 1
-format-disconnected-underline = ${colors.adapta-cyan}
 label-disconnected = 睊
 ;format-connected-margin = ${margin.for-modules}
 ;format-disconnected-margin = ${margin.for-modules}
+
+[module/network]
+type = internal/network
+interface = wlan0
+
+interval = 1.0
+accumulate-stats = true
+unknown-as-up = true
+
+format-connected = <ramp-signal> <label-connected>
+format-connected-background = ${colors.bg}
+format-connected-foreground = ${colors.fg}
+format-connected-padding = 1
+
+format-disconnected = <label-disconnected>
+format-disconnected-background = ${colors.bg}
+format-disconnected-foreground = ${colors.fg}
+format-disconnected-padding = 1
+
+label-connected = "%essid%"
+label-disconnected = 睊 "Not Connected"
+ramp-signal-0 = 直
+ramp-signal-1 = 直
+ramp-signal-2 = 直
+ramp-signal-3 = 直
+ramp-signal-4 = 直
 
 [module/cpu-value]
 type = internal/cpu
 interval = 0.1
 format-prefix = " "
-format-underline = ${colors.adapta-cyan}
 format-margin = ${margin.for-modules}
 format-padding = 1
 label = %percentage:2%%
@@ -192,34 +270,32 @@ label = %percentage:2%%
 type = internal/cpu
 interval = 0.08
 format = " <ramp-coreload>"
-format-underline = ${colors.adapta-cyan}
 format-margin = ${margin.for-modules}
 format-padding = 1
 ramp-coreload-0 = ▁
-ramp-coreload-0-foreground = ${colors.adapta-cyan}
+ramp-coreload-0-foreground = ${colors.cyan}
 ramp-coreload-1 = ▂
-ramp-coreload-1-foreground = ${colors.adapta-green}
+ramp-coreload-1-foreground = ${colors.green}
 ramp-coreload-2 = ▃
-ramp-coreload-2-foreground = ${colors.adapta-lightgreen}
+ramp-coreload-2-foreground = ${colors.light-green}
 ramp-coreload-3 = ▄
-ramp-coreload-3-foreground = ${colors.adapta-lightgreen}
+ramp-coreload-3-foreground = ${colors.light-green}
 ramp-coreload-4 = ▅
-ramp-coreload-4-foreground = ${colors.adapta-yellow}
+ramp-coreload-4-foreground = ${colors.yellow}
 ramp-coreload-5 = ▆
-ramp-coreload-5-foreground = ${colors.adapta-yellow}
+ramp-coreload-5-foreground = ${colors.yellow}
 ramp-coreload-6 = ▇
-ramp-coreload-6-foreground = ${colors.adapta-red}
+ramp-coreload-6-foreground = ${colors.red}
 ramp-coreload-7 = █
-ramp-coreload-7-foreground = ${colors.adapta-red}
+ramp-coreload-7-foreground = ${colors.red}
 ramp-coreload-font = 3
 
 [module/memory]
 type = internal/memory
 interval = 0.1
-format-underline = ${colors.adapta-cyan}
 ;format-margin = ${margin.for-modules}
 format-padding = 1
-label = RAM: %gb_used%/%gb_total%
+label =  %gb_used%/%gb_total%
 
 [module/battery]
 type = internal/battery
@@ -227,16 +303,12 @@ full-at = 99
 battery = CMB0
 adapter = ADP1
 format-charging = <animation-charging> <label-charging>
-;format-charging-background = ${colors.shade2}
-format-charging-underline = ${colors.adapta-cyan}
 format-charging-padding = 1
 label-charging = %percentage%%
 format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-underline = ${colors.adapta-cyan}
 format-discharging-padding = 1
 label-discharging = %percentage:2%%
 format-full = <label-full>
-format-full-underline = ${colors.adapta-cyan}
 format-full-padding = 1
 format-charging-margin = ${margin.for-modules}
 format-discharging-margin = ${margin.for-modules}
@@ -252,12 +324,12 @@ ramp-capacity-6 = 
 ramp-capacity-7 = 
 ramp-capacity-8 = 
 ramp-capacity-9 = 
-ramp-capacity-0-foreground = ${colors.adapta-red}
-ramp-capacity-1-foreground = ${colors.adapta-red}
-ramp-capacity-2-foreground = ${colors.adapta-red}
-ramp-capacity-3-foreground = ${colors.adapta-red}
-ramp-capacity-4-foreground = ${colors.adapta-yellow}
-ramp-capacity-5-foreground = ${colors.adapta-yellow}
+ramp-capacity-0-foreground = ${colors.red}
+ramp-capacity-1-foreground = ${colors.red}
+ramp-capacity-2-foreground = ${colors.red}
+ramp-capacity-3-foreground = ${colors.red}
+ramp-capacity-4-foreground = ${colors.yellow}
+ramp-capacity-5-foreground = ${colors.yellow}
 ramp-capacity-foreground   = ${colors.fg}
 animation-charging-0 = 
 animation-charging-1 = 
@@ -270,12 +342,40 @@ animation-charging-foreground = ${colors.fg}
 animation-charging-framerate = 750
 
 [module/powermenu]
-type = custom/text
-content = 襤
-content-padding = 1
-;content-background = ${colors.shade1}
-content-underline = ${colors.adapta-cyan}
-content-foreground = ${colors.fg}
-click-left = pmenu_1
-click-right = pmenu_1
+type = custom/menu
+
+expand-right = true
+
+menu-0-0 = 
+menu-0-0-exec = i3lock --color=000000 -f
+
+menu-0-1 = 
+menu-0-1-exec = i3-msg exit
+
+menu-0-2 = ﰇ
+menu-0-2-exec = menu-open-2
+
+menu-0-3 = 襤
+menu-0-3-exec = menu-open-1
+
+menu-1-0 = 
+menu-1-0-exec = menu-open-0
+menu-1-1 = 襤
+menu-1-1-exec = systemctl poweroff
+
+
+menu-2-0 = 
+menu-2-0-exec = menu-open-0
+menu-2-1 = ﰇ
+menu-2-1-exec = systemctl reboot
+
+;format-spacing = 1 
+format-background = ${colors.bg}
+format-foreground = ${colors.fg}
+format-padding = 1
+
+label-open = 襤
+label-close = 
+label-separator = " | "
+
 ;==========================================================
