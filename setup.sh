@@ -16,4 +16,6 @@ echo Cleaning Up...
 
 rm -rf Conjuam-Dotfiles
 
+rm LICENSE README.md setup.sh
+
 echo Done! Log Out or Reboot to ensure changes are successful!
