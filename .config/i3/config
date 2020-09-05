@@ -174,10 +174,22 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
+mode "move" {
+        bindsym Up move up 10 px
+        bindsym Down move down 10 px
+        bindsym Left move left 10 px
+        bindsym Right move right 10 px
+        
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+m mode "default"
+}
+
+bindsym $mod+m mode "move"
 bindsym $mod+r mode "resize"
 
 # Start Polybar 
-exec_always --no-startup-id /home/pi/.config/polybar/launch.sh
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Custom, misc. additions here
 
@@ -185,6 +197,6 @@ for_window [class="^.*"] border pixel 0
 
 bindsym $mod+Shift+x exec i3lock --color=000000 -f
 
-exec_always --no-startup-id feh --bg-scale /home/pi/Pictures/Simple\ Triangles.png
+exec_always --no-startup-id nitrogen --restore
 exec_always --no-startup-id nm-applet
 
