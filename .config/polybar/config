@@ -38,6 +38,7 @@ blue-gray = #546e7a
 for-modules = 1
 
 [bar/mainbar]
+monitor = ${env:MONITOR:}
 width = 100%
 height = 17
 fixed-center = true
@@ -61,7 +62,7 @@ scroll-down = i3wm-wsprev
 ;====Module settings+======================================
 modules-left = i3 rarrow2 xwindow rarrow1
 modules-center = larrow1 date rarrow1
-modules-right = larrow1 filesystem larrow2 network larrow1 volume larrow2 powermenu
+modules-right = larrow1 arch-aur-updates larrow2 backlight larrow1 battery larrow2 network larrow1 volume larrow2 powermenu
 ;==========================================================
 
 
@@ -187,7 +188,7 @@ format-background = ${colors.bg}
 format-foreground = ${colors.fg}
 format-padding = 1
 
-label = %percentage%%
+label = %percentage:3%%
 
 ramp-0 = 
 ramp-1 = 
@@ -217,6 +218,7 @@ ramp-volume-5 = 
 ramp-volume-6 = 
 
 format-volume-background = ${colors.blue}
+format-muted-background = ${colors.blue}
 
 [module/wlan]
 type = internal/network
@@ -234,7 +236,9 @@ label-disconnected = 睊
 
 [module/network]
 type = internal/network
-interface = wlan0
+interface = wlp2s0
+
+click-left = lxterminal -e "nmtui"
 
 interval = 1.0
 accumulate-stats = true
@@ -250,21 +254,22 @@ format-disconnected-background = ${colors.bg}
 format-disconnected-foreground = ${colors.fg}
 format-disconnected-padding = 1
 
-label-connected = "%essid%"
-label-disconnected = 睊 "Not Connected"
+label-connected = "%{A1:lxterminal -e nmtui:}%essid%%{A}"
+label-disconnected = "%{A1:lxterminal -e nmtui:}睊 Offline%{A}"
 ramp-signal-0 = 直
 ramp-signal-1 = 直
 ramp-signal-2 = 直
 ramp-signal-3 = 直
 ramp-signal-4 = 直
 
+
 [module/cpu-value]
 type = internal/cpu
 interval = 0.1
 format-prefix = " "
-format-margin = ${margin.for-modules}
 format-padding = 1
 label = %percentage:2%%
+format-background = ${colors.blue}
 
 [module/cpu-graph]
 type = internal/cpu
@@ -300,19 +305,16 @@ label =  %gb_used%/%gb_total%
 [module/battery]
 type = internal/battery
 full-at = 99
-battery = CMB0
+battery = BAT0
 adapter = ADP1
 format-charging = <animation-charging> <label-charging>
 format-charging-padding = 1
-label-charging = %percentage%%
+label-charging = %percentage:3%%
 format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-padding = 1
-label-discharging = %percentage:2%%
+label-discharging = %percentage:3%%
 format-full = <label-full>
 format-full-padding = 1
-format-charging-margin = ${margin.for-modules}
-format-discharging-margin = ${margin.for-modules}
-format-full-margin = ${margin.for-modules}
 format-full-prefix = " "
 ramp-capacity-0 = 
 ramp-capacity-1 = 
@@ -324,12 +326,12 @@ ramp-capacity-6 = 
 ramp-capacity-7 = 
 ramp-capacity-8 = 
 ramp-capacity-9 = 
-ramp-capacity-0-foreground = ${colors.red}
-ramp-capacity-1-foreground = ${colors.red}
-ramp-capacity-2-foreground = ${colors.red}
-ramp-capacity-3-foreground = ${colors.red}
-ramp-capacity-4-foreground = ${colors.yellow}
-ramp-capacity-5-foreground = ${colors.yellow}
+ramp-capacity-0-foreground = ${colors.fg}
+ramp-capacity-1-foreground = ${colors.fg}
+ramp-capacity-2-foreground = ${colors.fg}
+ramp-capacity-3-foreground = ${colors.fg}
+ramp-capacity-4-foreground = ${colors.fg}
+ramp-capacity-5-foreground = ${colors.fg}
 ramp-capacity-foreground   = ${colors.fg}
 animation-charging-0 = 
 animation-charging-1 = 
@@ -340,6 +342,9 @@ animation-charging-5 = 
 animation-charging-6 = 
 animation-charging-foreground = ${colors.fg}
 animation-charging-framerate = 750
+format-charging-background = ${colors.blue}
+format-full-background = ${colors.blue}
+format-discharging-background = ${colors.blue}
 
 [module/powermenu]
 type = custom/menu
@@ -347,27 +352,30 @@ type = custom/menu
 expand-right = true
 
 menu-0-0 = 
-menu-0-0-exec = i3lock --color=000000 -f
+menu-0-0-exec = i3exit lock
 
 menu-0-1 = 
-menu-0-1-exec = i3-msg exit
+menu-0-1-exec = i3exit logout
 
-menu-0-2 = ﰇ
-menu-0-2-exec = menu-open-2
+menu-0-2 = 鈴
+menu-0-2-exec = i3exit suspend
 
-menu-0-3 = 襤
-menu-0-3-exec = menu-open-1
+menu-0-3 = ﰇ
+menu-0-3-exec = menu-open-2
+
+menu-0-4 = 襤
+menu-0-4-exec = menu-open-1
 
 menu-1-0 = 
 menu-1-0-exec = menu-open-0
 menu-1-1 = 襤
-menu-1-1-exec = systemctl poweroff
+menu-1-1-exec = i3exit shutdown
 
 
 menu-2-0 = 
 menu-2-0-exec = menu-open-0
 menu-2-1 = ﰇ
-menu-2-1-exec = systemctl reboot
+menu-2-1-exec = i3exit reboot
 
 ;format-spacing = 1 
 format-background = ${colors.bg}
@@ -377,5 +385,18 @@ format-padding = 1
 label-open = 襤
 label-close = 
 label-separator = " | "
+
+
+[module/arch-aur-updates]
+type = custom/script
+exec = ~/.config/polybar/scripts/check-all-updates.sh
+interval = 1000
+label = %output% 
+format-foreground = ${colors.fg}
+format-background = ${colors.blue}
+format-prefix = " 痢 "
+format-prefix-foreground = #fefefe
+
+click-left = lxterminal -e "trizen -Syu"
 
 ;==========================================================

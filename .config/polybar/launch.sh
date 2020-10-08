@@ -10,3 +10,11 @@ echo "---" | tee -a /tmp/polybar1.log
 polybar mainbar >>/tmp/polybar1.log 2>&1 & disown
 
 echo "Polybar launched..."
+
+if type "xrandr"; then
+    for m in $(xrandr --query | grep "connected" | cut -d" " -f1); do
+        MONITOR=%m polybar --reload mainbar &
+    done
+else
+    polybar --reload mainbar &
+fi
