@@ -26,3 +26,15 @@ These include:
 - ...
 
 You will need to source these yourself, as instructions vary by distro. Having said that, some or all of these packages should be included in your distro's repositories.
+
+# Installation
+
+**MAKE SURE TO CREATE A BACKUP OF YOUR PREVIOUS CONFIGURATION FIRST.**
+
+**I AM NOT RESPONSIBLE FOR DATA LOSS, MISERY, THERMONUCLEAR WAR OR INJURY.**
+
+**ALWAYS AUDIT SCRIPTS FOUND ON THE INTERNET BEFORE YOU EXECUTE THEM!!!**
+
+---
+
+Download the [setup.sh](https://raw.githubusercontent.com/Conjuam/dotfiles/master/setup.sh) file (add execute permissions if necessary) then run (NOT AS SUDO!). Follow the instructions and then make sure log out and log back in. Dotfiles should now be applied.
