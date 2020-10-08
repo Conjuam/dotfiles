@@ -23,6 +23,7 @@ These include:
 - thunar
 - lxterminal
 - nitrogen
+- oh-my-bash
 - ...
 
 You will need to source these yourself, as instructions vary by distro. Having said that, some or all of these packages should be included in your distro's repositories.
