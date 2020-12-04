@@ -46,7 +46,7 @@ bindsym $mod+Return exec lxterminal
 bindsym $mod+Shift+q kill
 
 # start rofi
-bindsym $mod+d exec --no-startup-id rofi -show run -font "Iosevka 11"
+bindsym $mod+d exec --no-startup-id rofi -show drun -font "Iosevka 11"
 
 # start dmenu (a program launcher)
 # bindsym $mod+d exec dmenu_run
@@ -202,10 +202,8 @@ bindsym $mod+F1 exec lxterminal
 bindsym $mod+F2 exec thunar
 bindsym $mod+F3 exec vivaldi-stable
 
-bindsym Print exec --no-startup-id i3-scrot
 
-# Workspace Assignment
-assign [class="Telegram"] $ws10
+bindsym Print exec --no-startup-id i3-scrot
 
 # Autostart Apps
 
@@ -213,7 +211,7 @@ exec_always --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-ag
 exec_always --no-startup-id nitrogen --restore
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id xfce4-power-manager
-exec_always --no-startup-id telegram-desktop
+exec_always --no-startup-id compton
 
 #############################
 ### settings for i3-gaps: ###
