@@ -4,27 +4,59 @@ My dotfiles for Configs.
 Within this repo are dotfiles for all programs where they have been modified from their defaults.
 These include:
 - abcde
+- Alacritty
+- GNU Nano
 - i3 (Gaps)
+- Neofetch
 - Polybar
+- QTile
 - Rofi
-- More to come soon...
 
 # Dependencies
-Most of the dependencies are included but some packages need to be installed for everything to work as planned.
-These include:
-- rofi
-- i3-gaps
-- polybar
+Dependencies for the included Config Files are as follows:
 - abcde
-- trizen (For Arch-Based Distros)
-- network-manager
-- blurlock
-- xfce4-power-manager
-- thunar
-- lxterminal
-- nitrogen
-- oh-my-bash
-- ...
+  - flac
+  - vorbis-tools
+- alacritty
+  - no additional dependencies
+- GNU Nano
+  - no additional dependencies
+- i3(-gaps)
+  - blurlock
+  - lxterminal
+  - nitrogen
+  - polkit-gnome
+  - polybar
+  - rofi
+- Neofetch
+  - no additional dependencies
+- Polybar
+  - alsa
+  - i3
+  - lxterminal
+  - nmtui
+  - pulseaudio
+  - trizen
+  - xbacklight
+- QTile
+  - alacritty
+  - arcolinux-logout
+  - nitrogen
+  - nmtui
+  - numlockx
+  - pavucontrol
+  - picom
+  - polkit-gnome
+  - rofi
+  - scrot
+  - thunar
+  - trizen
+  - xfce4-notifyd
+  - xfce4-power-manager
+  - xfce4-screenshooter
+- Rofi
+  - no additional dependencies
+- oh-my-bash (optional)
 
 You will need to source these yourself, as instructions vary by distro. Having said that, some or all of these packages should be included in your distro's repositories.
 
