@@ -45,7 +45,7 @@ Dependencies for the included Config Files are as follows:
   - nmtui
   - numlockx
   - pavucontrol
-  - picom
+  - picom (Config for this is in ".config/qtile/scripts/")
   - polkit-gnome
   - rofi
   - scrot
