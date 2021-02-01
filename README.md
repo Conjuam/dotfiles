@@ -51,6 +51,7 @@ Dependencies for the included Config Files are as follows:
   - pavucontrol
   - picom (Config for this is in ".config/qtile/scripts/")
   - polkit-gnome
+  - (python(3)-)iwlib
   - rofi
   - scrot
   - thunar
