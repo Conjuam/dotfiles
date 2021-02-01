@@ -1,1 +1,3 @@
-rofi.theme: ~/.config/rofi/themes/Material\ Blue.rasi
+rofi.theme: ~/.config/rofi/themes/Solarized-Dark-Blue.rasi
+
+# rofi.theme: /usr/share/rofi/themes/android_notification.rasi
