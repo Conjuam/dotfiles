@@ -1,6 +1,10 @@
 # dotfiles
 My dotfiles for Configs.
 
+**BE SURE TO THOROUGHLY READ THIS BEFORE APPLYING THESE CONFIGURATION FILES!**
+
+**THESE FILES ARE PROVIDED WITHOUT ANY WARRANTY OR SUPPORT!**
+
 Within this repo are dotfiles for all programs where they have been modified from their defaults.
 These include:
 - abcde
